@@ -1,6 +1,8 @@
 package org.netmelody.panto;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Resource;
@@ -39,10 +41,24 @@ public final class StripedResourceCollection implements ResourceCollection {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Iterator<Resource> iterator() {
-        return resources.iterator();
+        @SuppressWarnings("unchecked")
+        final Iterator<Resource> iterator = resources.iterator();
+        final int stripeIndex = Math.max(stripeNum - 1, 0);
+        final int stripeCnt = Math.max(stripeCount, 1);
+        
+        int i = stripeCnt;
+        final List<Resource> result = new ArrayList<Resource>();
+        while (iterator.hasNext()) {
+            Resource resource = iterator.next();
+            if ((i % stripeCnt) == stripeIndex) {
+                result.add(resource);
+            }
+            i = i + 1;
+        }
+        
+        return result.iterator();
     }
 
     @Override
