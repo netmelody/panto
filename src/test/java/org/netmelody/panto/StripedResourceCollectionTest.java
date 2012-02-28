@@ -145,6 +145,17 @@ public final class StripedResourceCollectionTest {
         assertThat(stripe3, is(Matchers.<Resource>emptyIterable()));
     }
 
+    @Test public void
+    sortsResourcesBeforeStriping() throws Exception {
+        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "a", "b", "c").iterator());
+        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "c", "a", "b").iterator());
+        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "b", "c", "a").iterator());
+        
+        assertThat(stripe1, contains((Resource)new StringResource("a")));
+        assertThat(stripe2, contains((Resource)new StringResource("b")));
+        assertThat(stripe3, contains((Resource)new StringResource("c")));
+    }
+
     private static StripedResourceCollection stripeOf(int stripeNum, int stripeCount, String... contents) {
         final StripedResourceCollection collection = new StripedResourceCollection();
         for (String string : contents) {

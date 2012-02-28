@@ -1,6 +1,7 @@
 package org.netmelody.panto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,15 +44,13 @@ public final class StripedResourceCollection implements ResourceCollection {
 
     @Override
     public Iterator<Resource> iterator() {
-        @SuppressWarnings("unchecked")
-        final Iterator<Resource> iterator = resources.iterator();
+        final Iterable<Resource> contents = sortedContent();
         final int stripeIndex = Math.max(stripeNum - 1, 0);
         final int stripeCnt = Math.max(stripeCount, 1);
         
         int i = stripeCnt;
         final List<Resource> result = new ArrayList<Resource>();
-        while (iterator.hasNext()) {
-            Resource resource = iterator.next();
+        for (Resource resource : contents) {
             if ((i % stripeCnt) == stripeIndex) {
                 result.add(resource);
             }
@@ -59,6 +58,17 @@ public final class StripedResourceCollection implements ResourceCollection {
         }
         
         return result.iterator();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Iterable<Resource> sortedContent() {
+        final List<Resource> result = new ArrayList<Resource>();
+        final Iterator<?> content = resources.iterator();
+        while (content.hasNext()) {
+            result.add((Resource)content.next());
+        }
+        Collections.sort(result);
+        return result;
     }
 
     @Override
