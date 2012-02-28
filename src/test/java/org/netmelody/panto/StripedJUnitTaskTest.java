@@ -2,6 +2,8 @@ package org.netmelody.panto;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,5 +36,13 @@ public final class StripedJUnitTaskTest {
             fail("Expected BuildException");
         }
         catch (BuildException e) { /* pass */ }
+    }
+    
+    @Test public void
+    createsRecordingJUnitTask() {
+        final StripedJUnitTask task = new StripedJUnitTask();
+        
+        final JUnitTask subTask = task.createJUnit();
+        assertThat(subTask, is(Matchers.instanceOf(RecordingJUnitTask.class)));
     }
 }
