@@ -92,46 +92,46 @@ public final class StripedResourceCollectionTest {
     isTransparentInDefaultConfiguration() throws Exception {
         final StripedResourceCollection collection = new StripedResourceCollection();
         
-        collection.add(new StringResource("sausage"));
-        collection.add(new StringResource("turnip"));
+        collection.add(new StringResource("a"));
+        collection.add(new StringResource("b"));
         
         assertThat(collection.size(), is(2));
         assertThat(collection.isFilesystemOnly(), is(false));
         assertThat(contentsOf(collection.iterator()),
-                   contains((Resource)new StringResource("sausage"), (Resource)new StringResource("turnip")));
+                   contains((Resource)new StringResource("a"), (Resource)new StringResource("b")));
     }
 
     @Test public void
     stripesACollectionOfResourcesEqualInSizeToTheNumberOfStripes() throws Exception {
-        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "sausage", "turnip", "onion").iterator());
-        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "sausage", "turnip", "onion").iterator());
-        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "sausage", "turnip", "onion").iterator());
+        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "a", "b", "c").iterator());
+        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "a", "b", "c").iterator());
+        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "a", "b", "c").iterator());
         
-        assertThat(stripe1, contains((Resource)new StringResource("sausage")));
-        assertThat(stripe2, contains((Resource)new StringResource("turnip")));
-        assertThat(stripe3, contains((Resource)new StringResource("onion")));
+        assertThat(stripe1, contains((Resource)new StringResource("a")));
+        assertThat(stripe2, contains((Resource)new StringResource("b")));
+        assertThat(stripe3, contains((Resource)new StringResource("c")));
     }
 
     @Test public void
     stripesACollectionOfResourcesSmallerInSizeThanTheNumberOfStripes() throws Exception {
-        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "sausage", "turnip").iterator());
-        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "sausage", "turnip").iterator());
-        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "sausage", "turnip").iterator());
+        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "a", "b").iterator());
+        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "a", "b").iterator());
+        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "a", "b").iterator());
         
-        assertThat(stripe1, contains((Resource)new StringResource("sausage")));
-        assertThat(stripe2, contains((Resource)new StringResource("turnip")));
+        assertThat(stripe1, contains((Resource)new StringResource("a")));
+        assertThat(stripe2, contains((Resource)new StringResource("b")));
         assertThat(stripe3, is(Matchers.<Resource>emptyIterable()));
     }
 
     @Test public void
     stripesACollectionOfResourcesLargerInSizeThanTheNumberOfStripes() throws Exception {
-        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "sausage", "turnip", "onion", "cabbage").iterator());
-        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "sausage", "turnip", "onion", "cabbage").iterator());
-        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "sausage", "turnip", "onion", "cabbage").iterator());
+        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "a", "b", "c", "d").iterator());
+        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "a", "b", "c", "d").iterator());
+        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "a", "b", "c", "d").iterator());
         
-        assertThat(stripe1, contains((Resource)new StringResource("sausage"), new StringResource("cabbage")));
-        assertThat(stripe2, contains((Resource)new StringResource("turnip")));
-        assertThat(stripe3, contains((Resource)new StringResource("onion")));
+        assertThat(stripe1, contains((Resource)new StringResource("a"), new StringResource("d")));
+        assertThat(stripe2, contains((Resource)new StringResource("b")));
+        assertThat(stripe3, contains((Resource)new StringResource("c")));
     }
 
     @Test public void
