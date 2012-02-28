@@ -67,8 +67,20 @@ public final class StripedResourceCollectionTest {
     @Test public void
     failsToProvideIteratorIfStripeNumSetGreaterThanStripeCount() {
         final StripedResourceCollection collection = new StripedResourceCollection();
-        collection.setStripeNum(3);
+        collection.setStripeCount(2);
 
+        try {
+            collection.setStripeNum(3);
+            fail("Expected BuildException");
+        }
+        catch (BuildException e) { /* pass */ }
+    }
+    
+    @Test public void
+    failsToProvideIteratorIfStripeCountSetLessThanStripeNumber() {
+        final StripedResourceCollection collection = new StripedResourceCollection();
+        collection.setStripeNum(3);
+        
         try {
             collection.setStripeCount(2);
             fail("Expected BuildException");
