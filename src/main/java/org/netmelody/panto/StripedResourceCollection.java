@@ -47,14 +47,14 @@ public final class StripedResourceCollection implements ResourceCollection {
         final Iterable<Resource> contents = sortedContent();
         final int stripeIndex = Math.max(stripeNum - 1, 0);
         final int stripeCnt = Math.max(stripeCount, 1);
-        
-        int i = stripeCnt;
         final List<Resource> result = new ArrayList<Resource>();
+        
+        int index = stripeCnt;
         for (Resource resource : contents) {
-            if ((i % stripeCnt) == stripeIndex) {
+            if ((index % stripeCnt) == stripeIndex) {
                 result.add(resource);
             }
-            i = i + 1;
+            index = index + 1;
         }
         
         return result.iterator();
