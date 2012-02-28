@@ -8,6 +8,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.StringResource;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -95,6 +96,28 @@ public final class StripedResourceCollectionTest {
         final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "sausage", "turnip", "onion").iterator());
         
         assertThat(stripe1, contains((Resource)new StringResource("sausage")));
+        assertThat(stripe2, contains((Resource)new StringResource("turnip")));
+        assertThat(stripe3, contains((Resource)new StringResource("onion")));
+    }
+
+    @Test public void
+    stripesACollectionOfResourcesSmallerInSizeThanTheNumberOfStripes() throws Exception {
+        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "sausage", "turnip").iterator());
+        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "sausage", "turnip").iterator());
+        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "sausage", "turnip").iterator());
+        
+        assertThat(stripe1, contains((Resource)new StringResource("sausage")));
+        assertThat(stripe2, contains((Resource)new StringResource("turnip")));
+        assertThat(stripe3, is(Matchers.<Resource>emptyIterable()));
+    }
+
+    @Test public void
+    stripesACollectionOfResourcesLargerInSizeThanTheNumberOfStripes() throws Exception {
+        final Iterable<Resource> stripe1 = contentsOf(stripeOf(1, 3, "sausage", "turnip", "onion", "cabbage").iterator());
+        final Iterable<Resource> stripe2 = contentsOf(stripeOf(2, 3, "sausage", "turnip", "onion", "cabbage").iterator());
+        final Iterable<Resource> stripe3 = contentsOf(stripeOf(3, 3, "sausage", "turnip", "onion", "cabbage").iterator());
+        
+        assertThat(stripe1, contains((Resource)new StringResource("sausage"), new StringResource("cabbage")));
         assertThat(stripe2, contains((Resource)new StringResource("turnip")));
         assertThat(stripe3, contains((Resource)new StringResource("onion")));
     }
