@@ -1,0 +1,11 @@
+<project name="StripedJUnitTaskTestProject" basedir=".">
+  <taskdef name="stripetest" classname="org.netmelody.panto.StripedJUnitTask"/>
+
+  <target name="simple">
+    <stripetest stripeCount="2">
+        <junit>
+        </junit>
+    </stripetest>
+  </target>
+
+</project>
