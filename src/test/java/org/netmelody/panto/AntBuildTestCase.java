@@ -23,14 +23,14 @@ public abstract class AntBuildTestCase {
             super.tearDown();
         }
     }
-    
+
     private final BuildFileTestHelper antTestcase = new BuildFileTestHelper();
 
     @After
     public final void tearDownAntTestcase() throws Exception {
         antTestcase.tearDown();
     }
-    
+
     protected final void configureProject(final String antBuildFilename) {
         final File antBuildFile = copyResource(antBuildFilename, folder.getRoot());
         try {
@@ -61,11 +61,15 @@ public abstract class AntBuildTestCase {
         return file;
     }
 
-    protected final  void executeTarget(final String targetName) {
+    protected final void executeTarget(final String targetName) {
         antTestcase.executeTarget(targetName);
     }
 
-    protected final  String getOutput() {
+    protected final String getOutput() {
         return antTestcase.getOutput();
+    }
+    
+    protected final String getLog() {
+        return antTestcase.getLog();
     }
 }

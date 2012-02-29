@@ -2,8 +2,14 @@
   <typedef name="stripedresource" classname="org.netmelody.panto.StripedResourceCollection"/>
 
   <target name="simple">
-    <stripedresource stripeCount="2" stripeNum="1">
+    <stripedresource id="stripe" stripeCount="2" stripeNum="1">
+        <fileset dir="${basedir}">
+            <include name="**/*.txt"/>
+        </fileset>
     </stripedresource>
+
+    <pathconvert pathsep="," property="resources" refid="stripe"/>
+    <echo message="${resources}" />
   </target>
 
 </project>
