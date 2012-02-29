@@ -1,0 +1,9 @@
+<project name="StripedJUnitTaskTestProject" basedir=".">
+  <typedef name="stripedresource" classname="org.netmelody.panto.StripedResourceCollection"/>
+
+  <target name="simple">
+    <stripedresource stripeCount="2" stripeNum="1">
+    </stripedresource>
+  </target>
+
+</project>
