@@ -10,6 +10,7 @@ import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.ForkMode;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.SummaryAttribute;
 import org.apache.tools.ant.types.Commandline.Argument;
 import org.apache.tools.ant.types.Environment;
+import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.PropertySet;
 import org.apache.tools.ant.types.resources.Resources;
 
@@ -18,6 +19,7 @@ public final class RecordingJUnitTask {
     private final Resources batches = new Resources();
     private final Project project;
 
+    private final List<Path> classpaths = new ArrayList<Path>();
     private final List<FormatterElement> formatters = new ArrayList<FormatterElement>();
     private final List<PropertySet> syspropertysets = new ArrayList<PropertySet>();
     private final List<Environment.Variable> sysproperties = new ArrayList<Environment.Variable>();
@@ -27,9 +29,17 @@ public final class RecordingJUnitTask {
     private ForkMode forkMode;
     private boolean cloneVm;
     private SummaryAttribute printSummary;
+    private boolean haltOnFail;
+    private String failureProperty;
 
     public RecordingJUnitTask(Project project) {
         this.project = project;
+    }
+
+    public Path createClasspath() {
+        final Path path = new Path(project);
+        classpaths.add(path);
+        return path;
     }
 
     public Resources createBatchTest() {
@@ -48,6 +58,14 @@ public final class RecordingJUnitTask {
 
     public void setCloneVm(boolean cloneVm) {
         this.cloneVm = cloneVm;
+    }
+
+    public void setHaltonfailure(boolean value) {
+        this.haltOnFail = value;
+    }
+
+    public void setFailureProperty(String propertyName) {
+        this.failureProperty = propertyName;
     }
 
     public RecordingJvmArg createJvmarg() {
@@ -76,6 +94,10 @@ public final class RecordingJUnitTask {
         final JUnitTask junit = (JUnitTask) project.createTask("junit");
         junit.createBatchTest().add(new StripedResourceCollection(stripeNumber, stripeCount, batches));
 
+        for (Path classpath : classpaths) {
+            junit.createClasspath().add(classpath);
+        }
+
         for (FormatterElement formatter : formatters) {
             junit.addFormatter(formatter);
         }
@@ -92,6 +114,8 @@ public final class RecordingJUnitTask {
         junit.setForkMode(forkMode);
         junit.setCloneVm(cloneVm);
         junit.setPrintsummary(printSummary);
+        junit.setHaltonfailure(haltOnFail);
+        junit.setFailureProperty(failureProperty);
 
         for (Environment.Variable sysProp : sysproperties) {
             junit.addConfiguredSysproperty(sysProp);

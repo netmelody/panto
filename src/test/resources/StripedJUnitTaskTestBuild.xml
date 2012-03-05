@@ -3,9 +3,13 @@
 
   <target name="simple">
     <stripetest stripeCount="2">
-        <junit fork="true" forkmode="once" clonevm="true" printsummary="on">
+        <junit fork="true" forkmode="once" clonevm="true" printsummary="on" haltonfailure="false" failureproperty="my.failure">
+            <classpath>
+                <fileset file="DummyJUnitTestCase.*"/>
+            </classpath>
             <formatter type="xml" />
             <batchtest>
+            <!--<batchtest fork="yes" todir="${unittest.output.results}">-->
                 <fileset file="DummyJUnitTestCase.*" />
             </batchtest>
             <jvmarg value="-Djava.compiler=NONE"/>
