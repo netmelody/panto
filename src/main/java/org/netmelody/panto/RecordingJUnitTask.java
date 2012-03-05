@@ -8,6 +8,7 @@ import org.apache.tools.ant.taskdefs.optional.junit.FormatterElement;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.ForkMode;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.SummaryAttribute;
+import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.types.Commandline.Argument;
 import org.apache.tools.ant.types.resources.Resources;
 
@@ -17,6 +18,7 @@ public final class RecordingJUnitTask {
     private final Project project;
 
     private final List<FormatterElement> formatters = new ArrayList<FormatterElement>();
+    private final List<Environment.Variable> sysproperties = new ArrayList<Environment.Variable>();
     private final List<RecordingJvmArg> jvmArgs = new ArrayList<RecordingJvmArg>();
 
     private boolean fork;
@@ -57,7 +59,11 @@ public final class RecordingJUnitTask {
     }
 
     public void addFormatter(FormatterElement fe) {
-        formatters.add(fe);
+        this.formatters.add(fe);
+    }
+
+    public void addConfiguredSysproperty(Environment.Variable sysp) {
+        this.sysproperties.add(sysp);
     }
 
     public JUnitTask spawnTaskForStripe(int stripeNumber, int stripeCount) {
@@ -76,6 +82,10 @@ public final class RecordingJUnitTask {
         junit.setForkMode(forkMode);
         junit.setCloneVm(cloneVm);
         junit.setPrintsummary(printSummary);
+
+        for (Environment.Variable sysProp : sysproperties) {
+            junit.addConfiguredSysproperty(sysProp);
+        }
 
         return junit;
     }
