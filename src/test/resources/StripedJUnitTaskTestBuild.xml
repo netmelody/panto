@@ -3,7 +3,14 @@
 
   <target name="simple">
     <stripetest stripeCount="2">
-        <junit>
+        <junit fork="true" forkmode="once" clonevm="true" printsummary="on">
+            <formatter type="xml" />
+            <batchtest>
+                <fileset file="DummyJUnitTestCase.*" />
+            </batchtest>
+            <!--<jvmarg value="-Djava.compiler=NONE"/>-->
+            <!--<sysproperty key="basedir" value="${basedir}"/>-->
+            <!--<syspropertyset><propertyref prefix="test."/></syspropertyset>--> 
         </junit>
     </stripetest>
   </target>
