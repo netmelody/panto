@@ -4,6 +4,7 @@ Panto is parallel ant operations... Oh no it isn't!
 
 #### Striped Resource Collections
 Panto's striped resources allow for parallelisation of many ant tasks.
+
 ``` XML
   <typedef name="stripedresources"
            classname="org.netmelody.panto.StripedResourceCollection"
@@ -29,6 +30,7 @@ Panto's striped resources allow for parallelisation of many ant tasks.
 ```
 #### Striped JUnit Testing
 Panto's striped JUnit task makes parallelising junit tests easy.
+
 ``` XML
   <taskdef name="stripedjunit"
            classname="org.netmelody.panto.StripedJUnitTask"
