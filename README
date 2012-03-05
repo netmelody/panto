@@ -9,8 +9,9 @@ Striped Resource Collections
            classpath="path/to/panto-0.0.1.jar" />
 
   <someResourcefulTask>
-    <stripedresources stripeCount="3" stripeNum="${stripe}">  <!-- stripe can be 1-3 -->
-      <fileset> <!-- substitute normal resources here -->
+    <stripedresources stripeCount="3"
+                      stripeNum="${stripe}"> <!-- stripe can be 1-3 here -->
+      <fileset /> <!-- substitute normal resources here -->
     </stripedresources>
   </someResourcefulTask>
 
