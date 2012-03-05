@@ -63,7 +63,7 @@
 
         <jar destfile="${main.jar}">
             <fileset dir="${build.dir}/main"/>
-            <fileset dir="${basedir}" includes="LICENSE NOTICE README"/>
+            <fileset dir="${basedir}" includes="LICENSE NOTICE README.md"/>
 
             <manifest>
                 <attribute name="Built-By" value="${user.name}"/>
