@@ -1,5 +1,6 @@
 package org.netmelody.panto;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public final class RecordingJUnitTask {
     private SummaryAttribute printSummary;
     private boolean haltOnFail;
     private String failureProperty;
+    private File tempDir;
 
     public RecordingJUnitTask(Project project) {
         this.project = project;
@@ -70,8 +72,12 @@ public final class RecordingJUnitTask {
 
     public RecordingJvmArg createJvmarg() {
         final RecordingJvmArg result = new RecordingJvmArg();
-        
+        jvmArgs.add(result);
         return result;
+    }
+
+    public void setTempdir(File tmpDir) {
+        this.tempDir = tmpDir;
     }
 
     public void setPrintsummary(SummaryAttribute printSummary) {
@@ -116,6 +122,7 @@ public final class RecordingJUnitTask {
         junit.setPrintsummary(printSummary);
         junit.setHaltonfailure(haltOnFail);
         junit.setFailureProperty(failureProperty);
+        junit.setTempdir(tempDir);
 
         for (Environment.Variable sysProp : sysproperties) {
             junit.addConfiguredSysproperty(sysProp);
