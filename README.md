@@ -2,6 +2,8 @@ Panto
 =====
 Panto is parallel ant operations... Oh no it isn't!
 
+Oh yes it is, you can [download] here.
+
 #### Striped Resource Collections
 Panto's striped resources allow for parallelisation of many ant tasks.
 
@@ -40,3 +42,5 @@ Panto's striped JUnit task makes parallelising junit tests easy.
       <junit /> <!-- substitute your normal junit ant task here -->
   </stripedjunit>
 ```
+
+[download]: https://github.com/netmelody/panto/downloads
