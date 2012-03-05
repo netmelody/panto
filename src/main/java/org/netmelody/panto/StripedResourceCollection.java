@@ -20,7 +20,7 @@ public final class StripedResourceCollection implements ResourceCollection {
         this(-1, -1, null);
     }
     
-    public StripedResourceCollection(int stripeNum, int stripeCount, Resources resources) {
+    public StripedResourceCollection(int stripeNum, int stripeCount, ResourceCollection resources) {
         this.stripeNum = stripeNum;
         this.stripeCount = stripeCount;
         if (null != resources) {

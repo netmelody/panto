@@ -2,9 +2,11 @@ package org.netmelody.panto;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.taskdefs.optional.junit.BatchTest;
 import org.apache.tools.ant.taskdefs.optional.junit.FormatterElement;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.ForkMode;
@@ -13,11 +15,13 @@ import org.apache.tools.ant.types.Commandline.Argument;
 import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.PropertySet;
-import org.apache.tools.ant.types.resources.Resources;
+import org.apache.tools.ant.types.Resource;
+import org.apache.tools.ant.types.ResourceCollection;
+import org.apache.tools.ant.types.resources.Union;
 
 public final class RecordingJUnitTask {
 
-    private final Resources batches = new Resources();
+    private final RecordingBatchTest batches = new RecordingBatchTest();
     private final Project project;
 
     private final List<Path> classpaths = new ArrayList<Path>();
@@ -44,10 +48,8 @@ public final class RecordingJUnitTask {
         return path;
     }
 
-    public Resources createBatchTest() {
-        final Resources batchTest = new Resources();
-        batches.add(batchTest);
-        return batchTest;
+    public RecordingBatchTest createBatchTest() {
+        return batches;
     }
 
     public void setFork(boolean value) {
@@ -99,7 +101,10 @@ public final class RecordingJUnitTask {
     public JUnitTask spawnTaskForStripe(int stripeNumber, int stripeCount) {
         final JUnitTask junit = (JUnitTask) project.createTask("junit");
         junit.init();
-        junit.createBatchTest().add(new StripedResourceCollection(stripeNumber, stripeCount, batches));
+
+        final BatchTest junitBatchTest = junit.createBatchTest();
+        junitBatchTest.add(new StripedResourceCollection(stripeNumber, stripeCount, batches));
+        junitBatchTest.setTodir(batches.getToDir());
 
         final Path junitCasspath = junit.createClasspath();
         for (Path classpath : classpaths) {
@@ -118,7 +123,7 @@ public final class RecordingJUnitTask {
             junit.addSyspropertyset(sysPropSet);
         }
 
-        junit.setFork(fork);
+        junit.setFork(fork || batches.isFork());
         junit.setForkMode(forkMode);
         junit.setCloneVm(cloneVm);
         junit.setPrintsummary(printSummary);
@@ -134,7 +139,6 @@ public final class RecordingJUnitTask {
     }
 
     public static final class RecordingJvmArg {
-
         private String value;
 
         public void setValue(String value) {
@@ -145,6 +149,48 @@ public final class RecordingJUnitTask {
             if (value != null) {
                 realJvmArg.setValue(value);
             }
+        }
+    }
+    
+    public static final class RecordingBatchTest implements ResourceCollection {
+        private Union resourceUnion = new Union();
+        private File toDir;
+        private boolean fork;
+
+        public void setTodir(File toDir) {
+            this.toDir = toDir;
+        }
+
+        public File getToDir() {
+            return toDir;
+        }
+
+        public void setFork(boolean value) {
+            this.fork = value;
+        }
+
+        public boolean isFork() {
+            return fork;
+        }
+
+        public void add(ResourceCollection rc) {
+            resourceUnion.add(rc);
+        }
+        
+        @SuppressWarnings("unchecked")
+        @Override
+        public Iterator<Resource> iterator() {
+            return resourceUnion.iterator();
+        }
+
+        @Override
+        public int size() {
+            return resourceUnion.size();
+        }
+
+        @Override
+        public boolean isFilesystemOnly() {
+            return resourceUnion.isFilesystemOnly();
         }
     }
 }

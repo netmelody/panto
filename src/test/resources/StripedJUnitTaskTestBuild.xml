@@ -8,8 +8,10 @@
                 <fileset file="DummyJUnitTestCase.*"/>
             </classpath>
             <formatter type="xml" />
-            <batchtest>
-            <!--<batchtest fork="yes" todir="${unittest.output.results}">-->
+            <batchtest fork="yes" todir=".">
+                <fileset file="DummyJUnitTestCase.*" />
+            </batchtest>
+            <batchtest fork="yes" todir=".">
                 <fileset file="DummyJUnitTestCase.*" />
             </batchtest>
             <jvmarg value="-Djava.compiler=NONE"/>
