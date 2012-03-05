@@ -98,10 +98,12 @@ public final class RecordingJUnitTask {
 
     public JUnitTask spawnTaskForStripe(int stripeNumber, int stripeCount) {
         final JUnitTask junit = (JUnitTask) project.createTask("junit");
+        junit.init();
         junit.createBatchTest().add(new StripedResourceCollection(stripeNumber, stripeCount, batches));
 
+        final Path junitCasspath = junit.createClasspath();
         for (Path classpath : classpaths) {
-            junit.createClasspath().add(classpath);
+            junitCasspath.add(classpath);
         }
 
         for (FormatterElement formatter : formatters) {
