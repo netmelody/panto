@@ -102,9 +102,8 @@
         <mkdir dir="${build.dir}/testreport"/>
         <mkdir dir="${build.dir}/tmp"/>
 
-        <junit printsummary="yes" haltonfailure="yes" forkmode="once" tempdir="${build.dir}/tmp">
+        <junit printsummary="yes" haltonfailure="yes" fork="true" includeantruntime="true" forkmode="once" tempdir="${build.dir}/tmp">
             <classpath>
-              <fileset dir="${lib.dir}" includes="**/*.jar"/>
               <pathelement location="${main.jar}"/>
               <fileset dir="${buildlib.dir}" includes="**/*.jar"/>
               <pathelement location="${test.jar}"/>
