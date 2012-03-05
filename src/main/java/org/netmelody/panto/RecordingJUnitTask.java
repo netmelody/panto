@@ -8,6 +8,7 @@ import org.apache.tools.ant.taskdefs.optional.junit.FormatterElement;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.ForkMode;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.SummaryAttribute;
+import org.apache.tools.ant.types.Commandline.Argument;
 import org.apache.tools.ant.types.resources.Resources;
 
 public final class RecordingJUnitTask {
@@ -16,12 +17,13 @@ public final class RecordingJUnitTask {
     private final Project project;
 
     private final List<FormatterElement> formatters = new ArrayList<FormatterElement>();
+    private final List<RecordingJvmArg> jvmArgs = new ArrayList<RecordingJvmArg>();
 
     private boolean fork;
     private ForkMode forkMode;
     private boolean cloneVm;
     private SummaryAttribute printSummary;
-    
+
     public RecordingJUnitTask(Project project) {
         this.project = project;
     }
@@ -44,6 +46,12 @@ public final class RecordingJUnitTask {
         this.cloneVm = cloneVm;
     }
 
+    public RecordingJvmArg createJvmarg() {
+        final RecordingJvmArg result = new RecordingJvmArg();
+        
+        return result;
+    }
+
     public void setPrintsummary(SummaryAttribute printSummary) {
         this.printSummary = printSummary;
     }
@@ -60,11 +68,30 @@ public final class RecordingJUnitTask {
             junit.addFormatter(formatter);
         }
 
+        for (RecordingJvmArg jvmArg : jvmArgs) {
+            jvmArg.applyTo(junit.createJvmarg());
+        }
+
         junit.setFork(fork);
         junit.setForkMode(forkMode);
         junit.setCloneVm(cloneVm);
         junit.setPrintsummary(printSummary);
 
         return junit;
+    }
+
+    public static final class RecordingJvmArg {
+
+        private String value;
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public void applyTo(Argument realJvmArg) {
+            if (value != null) {
+                realJvmArg.setValue(value);
+            }
+        }
     }
 }
