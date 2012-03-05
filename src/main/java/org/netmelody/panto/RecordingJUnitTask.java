@@ -8,8 +8,9 @@ import org.apache.tools.ant.taskdefs.optional.junit.FormatterElement;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.ForkMode;
 import org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.SummaryAttribute;
-import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.types.Commandline.Argument;
+import org.apache.tools.ant.types.Environment;
+import org.apache.tools.ant.types.PropertySet;
 import org.apache.tools.ant.types.resources.Resources;
 
 public final class RecordingJUnitTask {
@@ -18,6 +19,7 @@ public final class RecordingJUnitTask {
     private final Project project;
 
     private final List<FormatterElement> formatters = new ArrayList<FormatterElement>();
+    private final List<PropertySet> syspropertysets = new ArrayList<PropertySet>();
     private final List<Environment.Variable> sysproperties = new ArrayList<Environment.Variable>();
     private final List<RecordingJvmArg> jvmArgs = new ArrayList<RecordingJvmArg>();
 
@@ -62,6 +64,10 @@ public final class RecordingJUnitTask {
         this.formatters.add(fe);
     }
 
+    public void addSyspropertyset(PropertySet sysPropSet) {
+        this.syspropertysets.add(sysPropSet);
+    }
+
     public void addConfiguredSysproperty(Environment.Variable sysp) {
         this.sysproperties.add(sysp);
     }
@@ -76,6 +82,10 @@ public final class RecordingJUnitTask {
 
         for (RecordingJvmArg jvmArg : jvmArgs) {
             jvmArg.applyTo(junit.createJvmarg());
+        }
+
+        for (PropertySet sysPropSet : syspropertysets) {
+            junit.addSyspropertyset(sysPropSet);
         }
 
         junit.setFork(fork);
