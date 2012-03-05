@@ -27,7 +27,8 @@ public final class StripedJUnitTask extends Task {
     
     @Override
     public void execute() throws BuildException {
-        Parallel parallelTask = (Parallel) getProject().createTask("parallel");
+        final Parallel parallelTask = (Parallel) getProject().createTask("parallel");
+        parallelTask.init();
         parallelTask.setThreadsPerProcessor(1);
         
         if (stripeCount <= 0) {
