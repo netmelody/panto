@@ -31,7 +31,7 @@ public final class RecordingJUnitTask {
     private final List<RecordingJvmArg> jvmArgs = new ArrayList<RecordingJvmArg>();
 
     private boolean fork;
-    private ForkMode forkMode;
+    private ForkMode forkMode = new ForkMode("once");
     private boolean cloneVm;
     private SummaryAttribute printSummary;
     private boolean haltOnFail;
@@ -126,7 +126,10 @@ public final class RecordingJUnitTask {
         junit.setFork(fork || batches.isFork());
         junit.setForkMode(forkMode);
         junit.setCloneVm(cloneVm);
-        junit.setPrintsummary(printSummary);
+        
+        if (printSummary != null) {
+            junit.setPrintsummary(printSummary);
+        }
         junit.setHaltonfailure(haltOnFail);
         junit.setFailureProperty(failureProperty);
         junit.setTempdir(tempDir);
