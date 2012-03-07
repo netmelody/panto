@@ -7,6 +7,7 @@ import org.netmelody.panto.internal.RecordingJUnitTask;
 
 public final class ParallelJUnitTask extends Task {
     private RecordingJUnitTask embeddedJUnitTask;
+    private int threadCount = -1;
     private int stripeCount = -1;
 
     public void setStripeCount(int stripeCount) {
@@ -14,6 +15,13 @@ public final class ParallelJUnitTask extends Task {
             throw new BuildException("There must be at least one stripe");
         }
         this.stripeCount = stripeCount;
+    }
+    
+    public void setThreadCount(int threadCount) {
+        if (threadCount <= 0) {
+            throw new BuildException("There must be at least one thread");
+        }
+        this.threadCount = threadCount;
     }
 
     public RecordingJUnitTask createJUnit() {
@@ -30,10 +38,17 @@ public final class ParallelJUnitTask extends Task {
     public void execute() throws BuildException {
         final Parallel parallelTask = (Parallel) getProject().createTask("parallel");
         parallelTask.init();
-        parallelTask.setThreadsPerProcessor(1);
+        
+        if (threadCount > 0) {
+            parallelTask.setThreadCount(threadCount);
+        }
+        else {
+            threadCount = Runtime.getRuntime().availableProcessors();
+            parallelTask.setThreadsPerProcessor(1);
+        }
         
         if (stripeCount <= 0) {
-            stripeCount = Runtime.getRuntime().availableProcessors();
+            stripeCount = threadCount;
         }
         for (int i = 0; i < stripeCount; i++) {
             parallelTask.addTask(embeddedJUnitTask.spawnTaskForStripe(i + 1, stripeCount));
