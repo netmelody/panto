@@ -32,7 +32,7 @@ public final class StripedJUnitTask extends Task {
         parallelTask.setThreadsPerProcessor(1);
         
         if (stripeCount <= 0) {
-            stripeCount = Runtime.getRuntime().availableProcessors() * 2;
+            stripeCount = Runtime.getRuntime().availableProcessors();
         }
         for (int i = 0; i < stripeCount; i++) {
             parallelTask.addTask(embeddedJUnitTask.spawnTaskForStripe(i + 1, stripeCount));
