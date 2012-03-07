@@ -35,6 +35,7 @@ public final class RecordingJUnitTask {
     private boolean cloneVm;
     private SummaryAttribute printSummary;
     private boolean haltOnFail;
+    private boolean haltOnError;
     private String failureProperty;
     private File tempDir;
 
@@ -62,6 +63,10 @@ public final class RecordingJUnitTask {
 
     public void setCloneVm(boolean cloneVm) {
         this.cloneVm = cloneVm;
+    }
+
+    public void setHaltonerror(boolean value) {
+        this.haltOnError = value;
     }
 
     public void setHaltonfailure(boolean value) {
@@ -131,6 +136,7 @@ public final class RecordingJUnitTask {
         if (printSummary != null) {
             junit.setPrintsummary(printSummary);
         }
+        junit.setHaltonerror(haltOnError);
         junit.setHaltonfailure(haltOnFail);
         junit.setFailureProperty(failureProperty);
         junit.setTempdir(tempDir);

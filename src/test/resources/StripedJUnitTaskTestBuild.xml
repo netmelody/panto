@@ -3,7 +3,7 @@
 
   <target name="simple">
     <stripetest stripeCount="2">
-        <junit fork="true" forkmode="once" clonevm="true" printsummary="on" haltonfailure="false" failureproperty="my.failure" tempdir=".">
+        <junit fork="true" forkmode="once" clonevm="true" printsummary="on" haltonfailure="false" haltonerror="false" failureproperty="my.failure" tempdir=".">
             <classpath>
                 <fileset file="DummyJUnitTestCase.*"/>
             </classpath>
