@@ -1,4 +1,4 @@
-<project name="StripedJUnitTaskTestProject" basedir=".">
+<project name="StripedResourceCollectionTestProject" basedir=".">
   <typedef name="stripedresource" classname="org.netmelody.panto.type.StripedResourceCollection"/>
 
   <target name="simple">

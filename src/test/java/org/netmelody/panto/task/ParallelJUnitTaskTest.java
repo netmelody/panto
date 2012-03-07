@@ -11,16 +11,16 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.typeCompatibleWith;
 import static org.junit.Assert.fail;
 
-public final class StripedJUnitTaskTest {
+public final class ParallelJUnitTaskTest {
 
     @Test public void
     isATask() {
-        assertThat(StripedJUnitTask.class, is(typeCompatibleWith(Task.class)));
+        assertThat(ParallelJUnitTask.class, is(typeCompatibleWith(Task.class)));
     }
 
     @Test public void
     failsIfStripeCountSetToZero() {
-        final StripedJUnitTask task = new StripedJUnitTask();
+        final ParallelJUnitTask task = new ParallelJUnitTask();
         try {
             task.setStripeCount(0);
             fail("Expected BuildException");
@@ -30,7 +30,7 @@ public final class StripedJUnitTaskTest {
 
     @Test public void
     failsIfStripeCountSetToLessThanZero() {
-        final StripedJUnitTask task = new StripedJUnitTask();
+        final ParallelJUnitTask task = new ParallelJUnitTask();
         try {
             task.setStripeCount(-1);
             fail("Expected BuildException");
@@ -40,7 +40,7 @@ public final class StripedJUnitTaskTest {
     
     @Test public void
     createsRecordingJUnitTask() {
-        final StripedJUnitTask task = new StripedJUnitTask();
+        final ParallelJUnitTask task = new ParallelJUnitTask();
         assertThat(task.createJUnit(), is(Matchers.instanceOf(RecordingJUnitTask.class)));
     }
 }

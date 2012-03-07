@@ -5,7 +5,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Parallel;
 import org.netmelody.panto.internal.RecordingJUnitTask;
 
-public final class StripedJUnitTask extends Task {
+public final class ParallelJUnitTask extends Task {
     private RecordingJUnitTask embeddedJUnitTask;
     private int stripeCount = -1;
 

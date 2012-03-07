@@ -4,11 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.netmelody.panto.AntBuildTestCase;
 
-public final class StripedJUnitTaskBuildTest extends AntBuildTestCase {
+public final class ParallelJUnitTaskBuildTest extends AntBuildTestCase {
 
     @Before
     public void setup() throws Exception {
-        configureProject("StripedJUnitTaskTestBuild.xml");
+        configureProject("ParallelJUnitTaskTestBuild.xml");
         
         this.folder.newFile("DummyJUnitTestCase.java");
     }

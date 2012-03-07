@@ -31,16 +31,16 @@ Panto's striped resources allow for parallelisation of many ant tasks.
   </parallel>
 ```
 #### Striped JUnit Testing
-Panto's striped JUnit task makes parallelising junit tests easy.
+Panto's parallel JUnit task makes parallelising junit tests easy.
 
 ``` XML
-  <taskdef name="stripedjunit"
-           classname="org.netmelody.panto.task.StripedJUnitTask"
+  <taskdef name="paralleljunit"
+           classname="org.netmelody.panto.task.ParallelJUnitTask"
            classpath="path/to/panto-0.0.1.jar" />
 
-  <stripedjunit>
+  <paralleljunit>
       <junit /> <!-- substitute your normal junit ant task here -->
-  </stripedjunit>
+  </paralleljunit>
 ```
 
 [download]: https://github.com/netmelody/panto/downloads
