@@ -47,6 +47,7 @@
     <target name="version" depends="version-for-snapshot,version-for-release">
         <echo message="Building version ${version.label}"/>
         <property name="main.jar" value="${build.dir}/panto-${version.label}.jar"/>
+        <property name="sources.jar" value="${build.dir}/panto-${version.label}-sources.jar"/>
         <property name="test.jar" value="${build.dir}/panto-tests-${version.label}.jar"/>
     </target>
 
@@ -70,6 +71,18 @@
                 <attribute name="Implementation-Vendor" value="netmelody.org"/>
                 <attribute name="Implementation-Title" value="${ant.project.name}"/>
                 <attribute name="Implementation-Version" value="${version.label}"/>
+                <attribute name="Built-Date" value="${build.timestamp}"/>
+            </manifest>
+        </jar>
+        <jar destfile="${sources.jar}">
+            <fileset dir="${basedir}/src/main"/>
+            <fileset dir="${basedir}" includes="LICENSE NOTICE README.md"/>
+
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Implementation-Vendor" value="netmelody.org"/>
+                <attribute name="Implementation-Title" value="${ant.project.name}"/>
+                <attribute name="Implementation-Version" value="${version.label}-sources"/>
                 <attribute name="Built-Date" value="${build.timestamp}"/>
             </manifest>
         </jar>
