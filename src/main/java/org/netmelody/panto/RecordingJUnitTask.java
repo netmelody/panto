@@ -105,6 +105,7 @@ public final class RecordingJUnitTask {
         final BatchTest junitBatchTest = junit.createBatchTest();
         junitBatchTest.add(new StripedResourceCollection(stripeNumber, stripeCount, batches));
         junitBatchTest.setTodir(batches.getToDir());
+        junitBatchTest.setFork(batches.isFork());
 
         final Path junitCasspath = junit.createClasspath();
         for (Path classpath : classpaths) {
@@ -123,7 +124,7 @@ public final class RecordingJUnitTask {
             junit.addSyspropertyset(sysPropSet);
         }
 
-        junit.setFork(fork || batches.isFork());
+        junit.setFork(fork);
         junit.setForkMode(forkMode);
         junit.setCloneVm(cloneVm);
         
