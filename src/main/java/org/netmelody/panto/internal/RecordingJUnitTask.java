@@ -1,4 +1,4 @@
-package org.netmelody.panto;
+package org.netmelody.panto.internal;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import org.apache.tools.ant.types.PropertySet;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.Union;
+import org.netmelody.panto.type.StripedResourceCollection;
 
 public final class RecordingJUnitTask {
 

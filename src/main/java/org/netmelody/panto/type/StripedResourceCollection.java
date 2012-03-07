@@ -1,4 +1,4 @@
-package org.netmelody.panto;
+package org.netmelody.panto.type;
 
 import java.util.ArrayList;
 import java.util.Collections;

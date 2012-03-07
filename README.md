@@ -9,7 +9,7 @@ Panto's striped resources allow for parallelisation of many ant tasks.
 
 ``` XML
   <typedef name="stripedresources"
-           classname="org.netmelody.panto.StripedResourceCollection"
+           classname="org.netmelody.panto.type.StripedResourceCollection"
            classpath="path/to/panto-0.0.1.jar" />
 
   <fileset id="test.files" dir="my/test/dir" includes="**/*Test.class" />
@@ -35,7 +35,7 @@ Panto's striped JUnit task makes parallelising junit tests easy.
 
 ``` XML
   <taskdef name="stripedjunit"
-           classname="org.netmelody.panto.StripedJUnitTask"
+           classname="org.netmelody.panto.task.StripedJUnitTask"
            classpath="path/to/panto-0.0.1.jar" />
 
   <stripedjunit>

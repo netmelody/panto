@@ -1,9 +1,10 @@
-package org.netmelody.panto;
+package org.netmelody.panto.task;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.netmelody.panto.internal.RecordingJUnitTask;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

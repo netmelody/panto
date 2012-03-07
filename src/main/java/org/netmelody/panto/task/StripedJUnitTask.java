@@ -1,8 +1,9 @@
-package org.netmelody.panto;
+package org.netmelody.panto.task;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Parallel;
+import org.netmelody.panto.internal.RecordingJUnitTask;
 
 public final class StripedJUnitTask extends Task {
     private RecordingJUnitTask embeddedJUnitTask;

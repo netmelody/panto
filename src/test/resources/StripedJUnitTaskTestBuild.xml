@@ -1,5 +1,5 @@
 <project name="StripedJUnitTaskTestProject" basedir=".">
-  <taskdef name="stripetest" classname="org.netmelody.panto.StripedJUnitTask"/>
+  <taskdef name="stripetest" classname="org.netmelody.panto.task.StripedJUnitTask"/>
 
   <target name="simple">
     <stripetest stripeCount="2">

@@ -1,9 +1,10 @@
-package org.netmelody.panto;
+package org.netmelody.panto.type;
 
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.netmelody.panto.AntBuildTestCase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
