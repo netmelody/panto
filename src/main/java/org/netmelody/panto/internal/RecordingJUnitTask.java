@@ -110,7 +110,7 @@ public final class RecordingJUnitTask {
 
         final BatchTest junitBatchTest = junit.createBatchTest();
         junitBatchTest.add(new StripedResourceCollection(stripeNumber, stripeCount, batches));
-        junitBatchTest.setTodir(batches.getToDir());
+        junitBatchTest.setTodir(batches.getTodir());
         junitBatchTest.setFork(batches.isFork());
 
         final Path junitCasspath = junit.createClasspath();
@@ -172,7 +172,7 @@ public final class RecordingJUnitTask {
             this.toDir = toDir;
         }
 
-        public File getToDir() {
+        public File getTodir() {
             return toDir;
         }
 
