@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Panto by netmelody</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Panto</h1>
+        <h2>parallel ant operations</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/netmelody/panto/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/netmelody/panto/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/netmelody/panto" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Panto</h1>
+
+<p>Panto is parallel ant operations... Oh no it isn't!</p>
+
+<p>Oh yes it is, you can <a href="https://github.com/netmelody/panto/downloads">download</a> here.</p>
+
+<h4>Striped Resource Collections</h4>
+
+<p>Panto's striped resources allow for parallelisation of many ant tasks.</p>
+
+<div class="highlight">
+<pre>  <span class="nt">&lt;typedef</span> <span class="na">name=</span><span class="s">"stripedresources"</span>
+           <span class="na">classname=</span><span class="s">"org.netmelody.panto.type.StripedResourceCollection"</span>
+           <span class="na">classpath=</span><span class="s">"path/to/panto-0.0.1.jar"</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;fileset</span> <span class="na">id=</span><span class="s">"test.files"</span> <span class="na">dir=</span><span class="s">"my/test/dir"</span> <span class="na">includes=</span><span class="s">"**/*Test.class"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;parallel&gt;</span>
+    <span class="nt">&lt;junit&gt;</span>
+      <span class="nt">&lt;batchtest&gt;</span>
+        <span class="nt">&lt;stripedresources</span> <span class="na">stripeCount=</span><span class="s">"2"</span> <span class="na">stripeNum=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;fileset</span> <span class="na">refid=</span><span class="s">"test.files"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/stripedresources&gt;</span>
+      <span class="nt">&lt;/batchtest&gt;</span>
+    <span class="nt">&lt;/junit&gt;</span>
+    <span class="nt">&lt;junit&gt;</span>
+      <span class="nt">&lt;batchtest&gt;</span>
+        <span class="nt">&lt;stripedresources</span> <span class="na">stripeCount=</span><span class="s">"2"</span> <span class="na">stripeNum=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;fileset</span> <span class="na">refid=</span><span class="s">"test.files"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/stripedresources&gt;</span>
+      <span class="nt">&lt;/batchtest&gt;</span>
+    <span class="nt">&lt;/junit&gt;</span>
+  <span class="nt">&lt;/parallel&gt;</span>
+</pre>
+</div>
+
+
+<h4>Striped JUnit Testing</h4>
+
+<p>Panto's parallel JUnit task makes parallelising junit tests easy.</p>
+
+<div class="highlight">
+<pre>  <span class="nt">&lt;taskdef</span> <span class="na">name=</span><span class="s">"paralleljunit"</span>
+           <span class="na">classname=</span><span class="s">"org.netmelody.panto.task.ParallelJUnitTask"</span>
+           <span class="na">classpath=</span><span class="s">"path/to/panto-0.0.1.jar"</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;paralleljunit&gt;</span>
+      <span class="nt">&lt;junit</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- substitute your normal junit ant task here --&gt;</span>
+  <span class="nt">&lt;/paralleljunit&gt;</span>
+</pre>
+</div>
+
+      </section>
+    </div>
+
+    
+  </body>
+</html>
