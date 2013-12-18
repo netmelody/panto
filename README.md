@@ -43,4 +43,4 @@ Panto's parallel JUnit task makes parallelising junit tests easy.
   </paralleljunit>
 ```
 
-[download]: https://github.com/netmelody/panto/downloads
+[download]: https://github.com/netmelody/panto/releases
