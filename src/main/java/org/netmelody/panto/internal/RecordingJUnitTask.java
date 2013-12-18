@@ -39,6 +39,8 @@ public final class RecordingJUnitTask {
     private boolean haltOnError;
     private String failureProperty;
     private File tempDir;
+    private boolean showOutput;
+    private boolean outputToFormatters = true;
 
     public RecordingJUnitTask(Project project) {
         this.project = project;
@@ -76,6 +78,14 @@ public final class RecordingJUnitTask {
 
     public void setFailureProperty(String propertyName) {
         this.failureProperty = propertyName;
+    }
+
+    public void setShowOutput(boolean showOutput) {
+        this.showOutput = showOutput;
+    }
+
+    public void setOutputToFormatters(boolean outputToFormatters) {
+        this.outputToFormatters = outputToFormatters;
     }
 
     public RecordingJvmArg createJvmarg() {
@@ -140,6 +150,8 @@ public final class RecordingJUnitTask {
         junit.setHaltonerror(haltOnError);
         junit.setHaltonfailure(haltOnFail);
         junit.setFailureProperty(failureProperty);
+        junit.setShowOutput(showOutput);
+        junit.setOutputToFormatters(outputToFormatters);
         junit.setTempdir(tempDir);
 
         for (Environment.Variable sysProp : sysproperties) {
